@@ -1,0 +1,132 @@
+<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+    <!-- Header -->
+    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-4 px-6 md:px-8">
+        <!-- Loader -->
+        <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+            <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+        </div>
+        <!-- Title -->
+        <div class="">
+            <a class="whitespace-nowrap text-primary-500 font-bold">Quản lý</a>
+            <h4
+                class="text-2xl md:text-3xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate text-gray-600 dark:text-slate-200">
+                Quản lý khóa học </h4>
+        </div>
+        <!-- Actions -->
+        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+            <!-- Search -->
+            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
+                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                <input matInput [formControl]="searchInputControl" [autocomplete]="'off'" [placeholder]="'Tìm kiếm'">
+            </mat-form-field>
+            <!-- Add course button -->
+            <button class="ml-4" mat-flat-button [color]="'primary'">
+                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="truncate ml-2 mr-1 hidden md:block">Tạo Mới</span>
+            </button>
+        </div>
+    </div>
+    <!-- Main -->
+    <div class="flex flex-auto overflow-hidden">
+        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+            <div class="grid">
+                <!-- Header -->
+                <div class="course-table-gird z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-gray-900"
+                    matSort matSortDisableClear>
+                    <div>Avatar</div>
+                    <div [mat-sort-header]="'code'">
+                        Tên khóa học
+                    </div>
+                    <div [mat-sort-header]="'product.code'">
+                        Tên giảng viên
+                    </div>
+                    <div class="hidden md:block" [mat-sort-header]="'product.name'">
+                        Ngày bắt đầu
+                    </div>
+                    <div class="hidden md:block">
+                        Mail giảng viên
+                    </div>
+                    <div [mat-sort-header]="'courseDate'">
+                        Học phí
+                    </div>
+                    <div class="hidden md:hidden lg:block" [mat-sort-header]="'warehouse'">
+                        Mô tả
+                    </div>
+                    <div class="hidden lg:block" [mat-sort-header]="'productLot'">
+                        Trạng thái
+                    </div>
+                    <div class="hidden sm:block">Chi tiết</div>
+                </div>
+                <!-- Rows -->
+                <ng-container *ngIf="(courses$ | async) as courses">
+                    <ng-container *ngIf="courses.length > 0; else noCourses">
+                        <ng-container *ngFor="let course of courses; trackBy: trackByFn">
+                            <div class="course-table-gird grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+                                <!-- Avatar -->
+                                <div class="flex items-center">
+                                    <div
+                                        class="relative flex flex-0 items-center justify-center w-12 h-12 mr-6 rounded overflow-hidden border">
+                                        <div
+                                            class="flex items-center justify-center w-full h-full text-xs font-semibold leading-none text-center uppercase">
+                                            NO AVATAR
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Code -->
+                                <div class="hiden truncate">
+                                    {{course.name}}
+                                </div>
+                                <!-- Product code -->
+                                <div class="truncate">
+                                    {{course.tutorName}}
+                                </div>
+                                <!-- Product name -->
+                                <div class="hidden md:block truncate">
+                                    {{course.beginDate | date: 'dd/MM/YYYY'}}
+                                </div>
+                                <!-- Lot-->
+                                <div class="hidden md:block truncate">
+                                    {{course.tutorEmail}}
+                                </div>
+                                <!-- Course date -->
+                                <div class="truncate">
+                                    {{course.studyFee}}
+                                </div>
+                                <!-- Warehouse -->
+                                <div class="hidden lg:block truncate">
+                                    {{course.description}}
+                                </div>
+                                <!-- Product lot -->
+                                <div class="hidden lg:block truncate">
+                                    {{course.status}}
+                                </div>
+                                <!-- Details button -->
+                                <div class="hidden sm:block">
+                                    <button class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                                        [routerLink]="[course.id]">
+                                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:chevron-right'">
+                                        </mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+                <mat-paginator
+                    class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-gray-900"
+                    [ngClass]="{'pointer-events-none': isLoading}" [length]="pagination?.total"
+                    [pageIndex]="pagination?.pageNumber" [pageSize]="pagination?.pageSize"
+                    [pageSizeOptions]="[2, 10, 25, 100]" [showFirstLastButtons]="true">
+                </mat-paginator>
+            </div>
+            <ng-template #noCourses>
+                <div
+                    class="p-8 sm:p-16 border-t font-semibold tracking-tight text-center text-gray-600 dark:text-slate-200">
+                    <h5 class="text-xl">There are no courses!</h5>
+                    <mat-icon class="icon-size-16" svgIcon="heroicons_outline:document-search"></mat-icon>
+                </div>
+            </ng-template>
+        </div>
+
+    </div>
+</div>

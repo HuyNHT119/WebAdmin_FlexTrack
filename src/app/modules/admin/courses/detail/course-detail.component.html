@@ -1,0 +1,164 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10  overflow-scroll">
+
+        <!-- CONTENT GOES HERE -->
+        <div *ngIf="course" class="h-100 border-gray-300 rounded-2xl">
+
+            <!-- Header -->
+            <div class="bg-card mb-6 rounded-xl">
+                <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+                    <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12">
+                        <!-- Avatar and name -->
+                        <div class="flex flex-auto items-center min-w-0">
+                            <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                                <img class="w-full h-full object-cover" src="assets/images/avatars/brian-hughes.jpg">
+                            </div>
+                            <div class="flex flex-col min-w-0 ml-4">
+                                <ng-container>
+                                    <div
+                                        class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
+                                        {{ course.name }}</div>
+                                </ng-container>
+                                <div class="flex items-center">
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:bell'"></mat-icon>
+                                    <div class="ml-1.5 leading-6 truncate text-secondary">{{ course.tutorName }} - {{
+                                        course.tutorEmail }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Actions -->
+                        <div class="flex items-center mt-6 sm:mt-0 sm:ml-2">
+                            <button mat-flat-button class="bg-green-600 text-gray-50" (click)="confirmCourse()">
+                                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:check'">
+                                </mat-icon>
+                                <span class="ml-2">Confirm</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail -->
+            <div class="bg-card rounded-xl">
+                <div class="w-full max-w-screen-xl mx-auto p-6 sm:px-8">
+
+                    <div class="grid grid-cols-3 gap-6">
+
+                        <div class="col-span-1 ">
+                            <div class="mb-6">
+
+                                <div
+                                    class="flex mat-ripple relative items-center py-2 px-4 font-medium rounded-full cursor-pointer ng-star-inserted bg-gray-200 dark:bg-gray-700 text-primary dark:text-primary-400 my-3">
+                                    <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
+                                    <div class="ml-3 leading-5 select-none text-default">Môn học</div>
+                                </div>
+                                <div class="font-medium ml-5">{{ course.subjectName }}</div>
+
+                            </div>
+                            <div class="mb-6">
+
+                                <div
+                                    class="mat-ripple relative flex items-center py-2 px-4 font-medium rounded-full cursor-pointer ng-star-inserted bg-gray-200 dark:bg-gray-700 text-primary dark:text-primary-400 my-3">
+                                    <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
+                                    <div class="ml-3 leading-5 select-none text-default">Lớp</div>
+                                </div>
+                                <div class="font-medium ml-5">{{ course.className }}</div>
+
+                            </div>
+
+                            <div class="mb-6">
+
+                                <div
+                                    class="mat-ripple relative flex items-center py-2 px-4 font-medium rounded-full cursor-pointer ng-star-inserted bg-gray-200 dark:bg-gray-700 text-primary dark:text-primary-400 my-3">
+                                    <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
+                                    <div class="ml-3 leading-5 select-none text-default">Địa chỉ</div>
+                                </div>
+                                <div class="font-medium ml-5">{{ course.tutorAddress }}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-span-1 ">
+                            <div class="mb-6">
+
+                                <div
+                                    class="flex mat-ripple relative items-center py-2 px-4 font-medium rounded-full cursor-pointer ng-star-inserted bg-gray-200 dark:bg-gray-700 text-primary dark:text-primary-400 my-3">
+                                    <mat-icon svgIcon="heroicons_outline:calendar"></mat-icon>
+                                    <div class="ml-3 leading-5 select-none text-default">Dự tính thời gian bắt đầu</div>
+                                </div>
+                                <div class="font-medium ml-5">{{ course.beginDate | date: 'dd/MM/YYYY' }}</div>
+
+                            </div>
+
+                            <div class="mb-6">
+
+                                <div
+                                    class="flex mat-ripple relative items-center py-2 px-4 font-medium rounded-full cursor-pointer ng-star-inserted bg-gray-200 dark:bg-gray-700 text-primary dark:text-primary-400 my-3">
+                                    <mat-icon svgIcon="heroicons_outline:library"></mat-icon>
+                                    <div class="ml-3 leading-5 select-none text-default">Số ngày học trong tuần</div>
+                                </div>
+                                <div class="font-medium ml-5">{{ course.daysInWeek }} ngày/tuần</div>
+
+                            </div>
+
+                            <div class="mb-6">
+
+                                <div
+                                    class="mat-ripple relative flex items-center py-2 px-4 font-medium rounded-full cursor-pointer ng-star-inserted bg-gray-200 dark:bg-gray-700 text-primary dark:text-primary-400 my-3">
+                                    <mat-icon svgIcon="heroicons_outline:cash"></mat-icon>
+                                    <div class="ml-3 leading-5 select-none text-default">Học phí</div>
+                                </div>
+                                <div class="font-medium ml-5">{{ course.studyFee }} đ</div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-span-1 ">
+
+                            <div class="mb-6">
+
+                                <div
+                                    class="mat-ripple relative flex items-center py-2 px-4 font-medium rounded-full cursor-pointer ng-star-inserted bg-gray-200 dark:bg-gray-700 text-primary dark:text-primary-400 my-3">
+                                    <mat-icon svgIcon="heroicons_outline:calendar"></mat-icon>
+                                    <div class="ml-3 leading-5 select-none text-default">Dự tính thời gian kết thúc
+                                    </div>
+                                </div>
+                                <div class="font-medium ml-5">{{ course.endDate | date: 'dd/MM/YYYY' }}</div>
+
+                            </div>
+
+
+                            <div class="mb-6">
+
+                                <div
+                                    class="mat-ripple relative flex items-center py-2 px-4 font-medium rounded-full cursor-pointer ng-star-inserted bg-gray-200 dark:bg-gray-700 text-primary dark:text-primary-400 my-3">
+                                    <mat-icon svgIcon="heroicons_outline:user-group"></mat-icon>
+                                    <div class="ml-3 leading-5 select-none text-default">Số lượng học viên tối đa</div>
+                                </div>
+                                <div class="font-medium ml-5">{{ course.maxTutee }} học viên</div>
+
+                            </div>
+
+                            <div class="mb-6">
+
+                                <div
+                                    class="mat-ripple relative flex items-center py-2 px-4 font-medium rounded-full cursor-pointer ng-star-inserted bg-gray-200 dark:bg-gray-700 text-primary dark:text-primary-400 my-3">
+                                    <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
+                                    <div class="ml-3 leading-5 select-none text-default">Mô tả</div>
+                                </div>
+                                <div class="font-medium ml-5">{{ course.description }}</div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
